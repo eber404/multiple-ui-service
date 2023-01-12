@@ -1,4 +1,7 @@
+### requirements 
+* Deno environment https://deno.land/manual@v1.29.2/getting_started/installation
 
+### steps
 1. run `docker compose up`
 2. access redis dashboard on your web browser `http://localhost:8001`
 3. follow steps below <br >
@@ -10,4 +13,4 @@
 4. Access `CLI` tab on left menu
 5. Copy payload below to send via PubSub message  
 
-`publish 'my-channel' '{   "user_name": "fulano",   "user_email": "fulano@gmail.com",   "user_password": "123123" }'`
+`publish 'my-channel' '{"user_name": "fulano", "user_email": "fulano@gmail.com", "user_password": "123123"}'`
