@@ -1,3 +1,6 @@
+### about
+just an example of clean architecture using deno environment
+
 ### requirements
 
 - Deno environment https://deno.land/manual@v1.29.2/getting_started/installation
