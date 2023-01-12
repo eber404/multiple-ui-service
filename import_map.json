@@ -1,0 +1,9 @@
+{
+  "imports": {
+    "@/": "./src/",
+    "@tests/": "./tests/",
+
+    "uuid": "https://deno.land/std@0.162.0/uuid/mod.ts",
+    "redis": "https://deno.land/x/redis@v0.27.3/mod.ts"
+  }
+}
