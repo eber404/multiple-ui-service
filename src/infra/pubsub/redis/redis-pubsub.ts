@@ -1,10 +1,10 @@
 import { connect } from "redis";
 
-import { Subscriber } from "@/infra/subscribers/subscriber.ts";
+import { PubSub } from "@/infra/pubsub/pubsub.ts";
 
 const redisClient = await connect({ hostname: "redis" });
 
-export class RedisSubscriber implements Subscriber {
+export class RedisPubSub implements PubSub {
   private readonly client = redisClient;
 
   async onMessage(

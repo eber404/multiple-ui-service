@@ -1,6 +1,6 @@
 type MessageCallback<T> = (message: T) => void;
 
-export interface Subscriber<T = string> {
+export interface PubSub<T = string> {
   onMessage(
     topic: string,
     callback: MessageCallback<T>,

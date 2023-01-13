@@ -1,10 +1,10 @@
-import { createUserController } from "./infra/ioc/create-user-ioc.ts";
-import { RedisPubSubAdapter } from "@/infra/subscribers/redis/redis-subscriber-adapter.ts";
-import { RedisSubscriber } from "@/infra/subscribers/redis/redis-subscriber.ts";
+import { createUserController } from "@/infra/ioc/create-user-ioc.ts";
+import { RedisPubSub } from "@/infra/pubsub/redis/redis-pubsub.ts";
+import { RedisPubSubAdapter } from "@/infra/pubsub/redis/redis-pubsub-adapter.ts";
 
-const redis = new RedisSubscriber();
+const redisPubSub = new RedisPubSub();
 
-redis.onMessage(
+redisPubSub.onMessage(
   "my-channel",
   RedisPubSubAdapter.onMessage(createUserController),
 );
