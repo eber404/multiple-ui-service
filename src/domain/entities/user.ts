@@ -1,26 +1,36 @@
-import { validate } from "uuid";
+import { Err, Ok, Result } from "oxide";
+import { z } from "zod";
+
+import { Id, idSchema } from "@/domain/value-objects/id.ts";
+
+const userSchema = z.object({
+  id: idSchema,
+  name: z.string().min(3),
+  email: z.string().email(),
+  password: z.string().min(8),
+});
+
+type UserInput = z.input<typeof userSchema>;
+type UserProps = UserInput & { id?: Id };
 
 export class User {
-  public readonly id!: string;
-  public readonly name!: string;
-  public readonly email!: string;
-  public readonly password!: string;
+  public readonly id: Id;
+  public readonly name: string;
+  public readonly email: string;
+  public readonly password: string;
 
-  constructor(props: Omit<User, "id">, id?: string) {
-    if (!id) {
-      this.id = crypto.randomUUID();
-    }
+  private constructor(props: UserProps) {
+    this.id = props.id;
+    this.name = props.name;
+    this.email = props.email;
+    this.password = props.password;
+  }
 
-    for (const key in props) {
-      if (!props[key]) {
-        throw Error(`[user entity] please, inform a valid prop for ${key}`);
-      }
-    }
+  static new(props: UserProps): Result<User, string> {
+    const validation = userSchema.safeParse(props);
 
-    if (id && !validate(id)) {
-      throw Error("[user entity] please, inform a valid id for user");
-    }
+    if (!validation.success) return Err(validation.error.message);
 
-    Object.assign(this, props);
+    return Ok(new User(validation.data));
   }
 }

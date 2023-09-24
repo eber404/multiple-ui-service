@@ -4,7 +4,10 @@
     "test": "deno test -A tests",
     "test:watch": "deno test -A --watch tests",
     "build": "deno compile --output out/build src/main.ts --allow-all --config deno.json",
-    "clean:build": "rm -rf build"
+    "clean:build": "rm -rf build",
+    "lint": "deno lint src",
+    "check": "deno check src/**/*.ts",
+    "fmt": "deno fmt src/**/*.ts"
   },
   "importMap": "import_map.json",
   "test": {

@@ -4,6 +4,14 @@
     "@tests/": "./tests/",
 
     "uuid": "https://deno.land/std@0.162.0/uuid/mod.ts",
-    "redis": "https://deno.land/x/redis@v0.27.3/mod.ts"
+    "redis": "https://deno.land/x/redis@v0.27.3/mod.ts",
+
+    "oxide": "npm:oxide.ts@1.1.0",
+    "zod": "npm:zod@3.22.2",
+    "fastify": "npm:fastify@4.23.2",
+
+    "lodash": "https://esm.sh/lodash-es@4.17.21",
+    "cuid2": "https://esm.sh/@paralleldrive/cuid2@2.2.2",
+    "http-status-codes": "https://esm.sh/http-status-codes@2.3.0"
   }
 }

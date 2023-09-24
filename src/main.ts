@@ -1,10 +1,16 @@
-import { createUserController } from "@/infra/ioc/create-user-ioc.ts";
-import { RedisPubSub } from "@/infra/pubsub/redis/redis-pubsub.ts";
-import { RedisPubSubAdapter } from "@/infra/pubsub/redis/redis-pubsub-adapter.ts";
+import { CreateUserIoc } from "@/infra/ioc/create-user-ioc.ts";
+import { RedisSubscriber } from "@/infra/pubsub/redis/redis-subscriber.ts";
+import { RedisAdapter } from "@/infra/pubsub/redis/redis-adapter.ts";
+import { fastifyServer } from "@/infra/http/fastify/server.ts";
+import { FastifyAdapter } from "@/infra/http/fastify/fastify-adapter.ts";
 
-const redisPubSub = new RedisPubSub();
+const redisSubscriber = new RedisSubscriber();
 
-redisPubSub.onMessage(
-  "my-channel",
-  RedisPubSubAdapter.onMessage(createUserController),
+const { createUserController } = CreateUserIoc();
+
+redisSubscriber.subscribe(
+  "create-user",
+  RedisAdapter.onMessage(createUserController),
 );
+
+fastifyServer.post("/users", FastifyAdapter.onRequest(createUserController));

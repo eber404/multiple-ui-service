@@ -1,7 +1,7 @@
 import { User } from "@/domain/entities/user.ts";
-import { CreateUserRepository } from "@/domain/repositories/create-user-repository.ts";
+import { UserRepository } from "@/domain/repositories/create-user-repository.ts";
 
-export class InMemoryCreateUserRepository implements CreateUserRepository {
+export class InMemoryCreateUserRepository implements UserRepository {
   public users: User[] = [];
 
   async create(user: User): Promise<void> {

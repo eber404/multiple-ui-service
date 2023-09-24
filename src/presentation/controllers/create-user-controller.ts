@@ -1,25 +1,30 @@
-import { CreateUserUseCase } from "@/application/create-user-usecase.ts";
+import { CreateUserUseCase } from "@/application/create-user/create-user-usecase.ts";
+import { Controller, HandleProps } from "@/domain/controllers/controller.ts";
 
-export interface CreateUserControllerProps {
-  data: any;
+export interface Dependencies {
+  createUserUseCase: CreateUserUseCase;
 }
 
-export class CreateUserController {
-  constructor(private readonly createUserUseCase: CreateUserUseCase) {}
+export interface Input {
+  user_email: string;
+  user_name: string;
+  user_password: string;
+}
 
-  async handle(props: CreateUserControllerProps) {
-    for (const key in props.data) {
-      if (!props.data[key]) {
-        throw Error(
-          `[create user controller] missing user props on controller`,
-        );
-      }
+export class CreateUserController implements Controller {
+  constructor(private readonly deps: Dependencies) {}
+
+  async handle({ input, handlers }: HandleProps) {
+    const outputResult = await this.deps.createUserUseCase.execute({
+      email: input.user_email,
+      name: input.user_name,
+      password: input.user_password,
+    });
+
+    if (outputResult.isErr()) {
+      return handlers.onError(outputResult.unwrapErr());
     }
 
-    await this.createUserUseCase.execute({
-      email: props.data.user_email,
-      name: props.data.user_name,
-      password: props.data.user_password,
-    });
+    handlers.onSuccess();
   }
 }

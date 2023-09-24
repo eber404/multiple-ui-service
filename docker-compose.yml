@@ -7,6 +7,8 @@ services:
       - redis
     volumes:
       - .:/app
+    ports:
+      - 3333:3333
     networks:
       - ms-network
 

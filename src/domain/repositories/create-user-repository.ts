@@ -1,5 +1,5 @@
-import { User } from "../entities/user.ts";
+import { User } from "@/domain/entities/user.ts";
 
-export interface CreateUserRepository {
+export interface UserRepository {
   create(user: User): Promise<void>;
 }
