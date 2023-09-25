@@ -16,7 +16,7 @@ export class OpineAdapter {
 
         const { message, status } = await controller.handle(input);
 
-        res.setStatus(status).send(message ? { message } : null);
+        res.setStatus(status).send(message && { message });
       } catch (error) {
         res.setStatus(Status.InternalServerError).send({
           message: error.message,
