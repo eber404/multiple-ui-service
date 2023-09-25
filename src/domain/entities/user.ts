@@ -2,11 +2,12 @@ import { Err, Ok, Result } from "oxide";
 import { z } from "zod";
 
 import { Id, idSchema } from "@/domain/value-objects/id.ts";
+import { Email, emailSchema } from "@/domain/value-objects/email.ts";
 
 const userSchema = z.object({
   id: idSchema,
   name: z.string().min(3),
-  email: z.string().email(),
+  email: emailSchema,
   password: z.string().min(8),
 });
 
@@ -15,7 +16,7 @@ type UserProps = UserInput & { id?: Id };
 
 export class User {
   public readonly id: Id;
-  public readonly name: string;
+  public readonly name: Email;
   public readonly email: string;
   public readonly password: string;
 

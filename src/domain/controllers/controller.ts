@@ -1,10 +1,8 @@
-import { Handlers } from "@/domain/controllers/handlers.ts";
-
-export interface HandleProps<T = any> {
-  input?: T;
-  handlers: Handlers;
+export interface ControllerOutput {
+  status: number;
+  message?: string;
 }
 
-export interface Controller {
-  handle<T>(props: HandleProps<T>): Promise<void>;
+export interface Controller<I = unknown> {
+  handle(input?: I): Promise<ControllerOutput>;
 }

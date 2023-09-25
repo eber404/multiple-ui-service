@@ -1,43 +1,53 @@
-import { Err, Ok, Result } from "oxide";
-
 import { User } from "@/domain/entities/user.ts";
-import { UserRepository } from "@/domain/repositories/create-user-repository.ts";
-import { DomainError } from "../../domain/errors/domain-error.ts";
-import { DomainErrorType } from "@/domain/errors/error-type.ts";
+import { UserRepository } from "@/domain/repositories/user-repository.ts";
+import { UseCase } from "@/domain/usecases/usecase.ts";
+import { EmailValidator } from "@/domain/value-objects/email.ts";
+import { BadInputException } from "@/domain/exceptions/bad-input.ts";
 
 interface Dependencies {
   userRepository: UserRepository;
 }
 
-interface Props {
+interface Input {
   name: string;
   email: string;
   password: string;
 }
 
-export class CreateUserUseCase {
+export class CreateUserUseCase implements UseCase {
   constructor(private readonly deps: Dependencies) {}
 
   async execute({
     email,
     name,
     password,
-  }: Props): Promise<Result<void, DomainError>> {
-    const user = User.new({
+  }: Input): Promise<void> {
+    const emailResult = EmailValidator.validate(email);
+
+    if (emailResult.isErr()) {
+      throw new BadInputException(`Email ${email} has not a valid format.`);
+    }
+
+    const userResult = User.new({
       email,
       name,
       password,
     });
 
-    if (user.isErr()) {
-      return Err(
-        new DomainError({
-          message: user.unwrapErr(),
-          type: DomainErrorType.BadInput,
-        }),
+    if (userResult.isErr()) {
+      throw new BadInputException(userResult.unwrapErr());
+    }
+
+    const retriviedUser = await this.deps.userRepository.getByEmail(
+      emailResult.unwrap(),
+    );
+
+    if (retriviedUser.isSome()) {
+      throw new BadInputException(
+        `Email address ${emailResult.unwrap()} is already in use.`,
       );
     }
 
-    return Ok(await this.deps.userRepository.create(user.unwrap()));
+    await this.deps.userRepository.create(userResult.unwrap());
   }
 }

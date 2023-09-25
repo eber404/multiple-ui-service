@@ -2,7 +2,7 @@ import { OnMessageInput, Subscriber } from "@/domain/pubsub/subscriber.ts";
 
 import { redis } from "./redis-client.ts";
 
-export class RedisSubscriber implements Subscriber {
+class RedisSubscriber implements Subscriber {
   private readonly redis = redis;
 
   async subscribe(
@@ -18,3 +18,5 @@ export class RedisSubscriber implements Subscriber {
     }
   }
 }
+
+export const redisSubscriber = new RedisSubscriber();

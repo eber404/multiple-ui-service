@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "dev": "deno run -A --watch src/main.ts",
+    "dev": "deno run -A --watch src/main.ts --lock=deno.lock --lock-write",
     "test": "deno test -A tests",
     "test:watch": "deno test -A --watch tests",
     "build": "deno compile --output out/build src/main.ts --allow-all --config deno.json",

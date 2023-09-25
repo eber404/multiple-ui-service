@@ -1,4 +1,5 @@
 ### about
+
 just an example of clean architecture using deno environment
 
 ### requirements
@@ -18,4 +19,4 @@ just an example of clean architecture using deno environment
 4. Access `CLI` tab on left menu
 5. Copy payload below to send via PubSub message
 
-`publish 'my-channel' '{"user_name": "fulano", "user_email": "fulano@gmail.com", "user_password": "123123"}'`
+`publish 'create-user' '{"user_name": "johndoe", "user_email": "johndoe@gmail.com", "user_password": "12345678"}'`
