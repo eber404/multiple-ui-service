@@ -1,8 +1,8 @@
-import { Err, Ok, Result } from "oxide";
-import { z } from "zod";
+import { z, ZodError } from "zod";
 
 import { Id, idSchema } from "@/domain/value-objects/id.ts";
 import { Email, emailSchema } from "@/domain/value-objects/email.ts";
+import { BadInputException } from "@/domain/exceptions/bad-input.ts";
 
 const userSchema = z.object({
   id: idSchema,
@@ -11,27 +11,38 @@ const userSchema = z.object({
   password: z.string().min(8),
 });
 
-type UserInput = z.input<typeof userSchema>;
-type UserProps = UserInput & { id?: Id };
+type UserIn = z.input<typeof userSchema>;
+type UserOut = z.output<typeof userSchema>;
 
 export class User {
   public readonly id: Id;
-  public readonly name: Email;
-  public readonly email: string;
+  public readonly name: string;
+  public readonly email: Email;
   public readonly password: string;
 
-  private constructor(props: UserProps) {
+  private constructor(props: UserOut) {
     this.id = props.id;
-    this.name = props.name;
     this.email = props.email;
+    this.name = props.name;
     this.password = props.password;
   }
 
-  static new(props: UserProps): Result<User, string> {
-    const validation = userSchema.safeParse(props);
+  static new(input: UserIn): User {
+    const validation = userSchema.safeParse(input);
 
-    if (!validation.success) return Err(validation.error.message);
+    if (!validation.success) {
+      throw new BadInputException(this.buildErrorMessage(validation.error));
+    }
 
-    return Ok(new User(validation.data));
+    return new User(validation.data);
+  }
+
+  private static buildErrorMessage(error: ZodError) {
+    const errors = error.errors.map((err) => ({
+      message: err.message,
+      fields: err.path,
+    }));
+
+    return JSON.stringify(errors, null, 2);
   }
 }
