@@ -1,6 +1,6 @@
 import { Status } from "http-status";
 
-import { ControllerOutput } from "@/domain/controllers/controller.ts";
+import { ControllerOutput } from "@/infra/controllers/controller.ts";
 import { BadInputException } from "@/domain/exceptions/bad-input.ts";
 import { NotFoundException } from "@/domain/exceptions/not-found.ts";
 

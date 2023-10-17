@@ -1,6 +1,6 @@
 import { User } from "@/domain/entities/user.ts";
 import { UserRepository } from "@/domain/repositories/user-repository.ts";
-import { UseCase } from "@/domain/usecases/usecase.ts";
+import { UseCase } from "./usecase.ts";
 import { BadInputException } from "@/domain/exceptions/bad-input.ts";
 
 interface Dependencies {

@@ -1,6 +1,6 @@
 ### about
 
-just an example of clean architecture using deno environment
+An example on how to have multiple UIs on the same service
 
 ### requirements
 

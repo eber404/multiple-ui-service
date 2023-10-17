@@ -1,12 +1,9 @@
 import _ from "lodash";
 import { Status } from "http-status";
 
-import { CreateUserUseCase } from "@/application/create-user/create-user-usecase.ts";
-import {
-  Controller,
-  ControllerOutput,
-} from "@/domain/controllers/controller.ts";
-import { mapDomainException } from "@/presentation/mappers/domain-error-mapper.ts";
+import { CreateUserUseCase } from "@/application/create-user-usecase.ts";
+import { Controller, ControllerOutput } from "./controller.ts";
+import { mapDomainException } from "./mappers/domain-error-mapper.ts";
 
 export interface Dependencies {
   createUserUseCase: CreateUserUseCase;

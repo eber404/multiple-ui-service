@@ -1,4 +1,4 @@
-import { Controller } from "@/domain/controllers/controller.ts";
+import { Controller } from "@/infra/controllers/controller.ts";
 import { OnMessageInput } from "@/domain/pubsub/subscriber.ts";
 
 export class RedisAdapter {

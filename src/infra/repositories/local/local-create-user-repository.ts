@@ -1,8 +1,7 @@
-import { None, Option } from "oxide";
+import { None, Option, Some } from "oxide";
 
 import { User } from "@/domain/entities/user.ts";
 import { UserRepository } from "@/domain/repositories/user-repository.ts";
-import { Some } from "oxide";
 import { usersCollection } from "@/infra/repositories/local/users-collection.ts";
 
 export class LocalCreateUserRepository implements UserRepository {
@@ -14,11 +13,11 @@ export class LocalCreateUserRepository implements UserRepository {
     console.log(this.users);
   }
 
-  getByEmail(email: string): Option<User> {
+  async getByEmail(email: string): Promise<Option<User>> {
     const user = this.users.find((user) => user.email === email);
 
     if (!user) return None;
 
-    return Some(user);
+    return Promise.resolve(Some(user));
   }
 }

@@ -1,7 +1,7 @@
 import { OpineRequest, OpineResponse } from "opine";
 import { Status } from "http-status";
 
-import { Controller } from "@/domain/controllers/controller.ts";
+import { Controller } from "@/infra/controllers/controller.ts";
 
 export class OpineAdapter {
   static onRequest(controller: Controller) {

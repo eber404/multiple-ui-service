@@ -1,7 +1,7 @@
 import { z, ZodError } from "zod";
 
-import { Id, idSchema } from "@/domain/value-objects/id.ts";
-import { Email, emailSchema } from "@/domain/value-objects/email.ts";
+import { Id, idSchema } from "./id.ts";
+import { Email, emailSchema } from "./email.ts";
 import { BadInputException } from "@/domain/exceptions/bad-input.ts";
 
 const userSchema = z.object({
